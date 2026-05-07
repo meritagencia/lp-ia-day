@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planilhas com IA Day · 23/05 · R$ 47</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET + TOKENS
+   ============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0a0a0a;
+  --bg-s:#050505;
+  --bg-card:#131313;
+  --bg-el:#1a1a1a;
+  --ink:#f5f5f0;
+  --ink-dim:#999;
+  --ink-muted:#555;
+  --accent:#d4ff00;
+  --accent-glow:rgba(212,255,0,.25);
+  --danger:#ff3b30;
+  --border:#1e1e1e;
+  --border-bright:#333;
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg-s);
+  color:var(--ink);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+.container{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+/* ============================================================
+   GRID PATTERN BG
+   ============================================================ */
+.bg-grid{
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+
+/* ============================================================
+   TOPBAR URGÊNCIA (sticky)
+   ============================================================ */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  background:var(--accent);
+  color:#000;
+  padding:10px 20px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:13px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+}
+.topbar-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--danger);
+  box-shadow:0 0 0 0 rgba(255,59,48,.6);
+  animation:topbar-pulse 1.4s infinite;
+}
+@keyframes topbar-pulse{
+  0%{box-shadow:0 0 0 0 rgba(255,59,48,.6);}
+  70%{box-shadow:0 0 0 8px rgba(255,59,48,0);}
+  100%{box-shadow:0 0 0 0 rgba(255,59,48,0);}
+}
+.topbar-progress-wrap{display:flex;align-items:center;gap:8px;}
+.topbar-progress{
+  width:80px;height:6px;border-radius:3px;
+  background:rgba(0,0,0,.2);overflow:hidden;
+}
+.topbar-progress-fill{
+  height:100%;border-radius:3px;
+  background:var(--danger);
+  width:100%;
+}
+
+/* ============================================================
+   LOTE CARDS
+   ============================================================ */
+.lote-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin-bottom:28px;}
+.lote-card{
+  padding:14px 12px;border-radius:6px;text-align:center;
+  border:1px solid var(--border-bright);
+  background:var(--bg-card);
+  opacity:.45;
+}
+.lote-card--active{
+  opacity:1;
+  border-color:var(--accent);
+  background:var(--bg-el);
+  position:relative;
+}
+.lote-card--active::before{
+  content:'';position:absolute;inset:-1px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),transparent 60%);
+  z-index:-1;
+  opacity:.25;
+}
+.lote-label{display:block;font-size:11px;color:var(--ink-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+.lote-price{display:block;font-family:'Anton',sans-serif;font-size:22px;color:var(--ink);}
+.lote-card--active .lote-price{color:var(--accent);}
+.lote-fire{display:block;font-size:14px;margin-bottom:2px;}
+
+/* ============================================================
+   BTN BRUTALIST
+   ============================================================ */
+.btn-brutalist{
+  display:inline-block;
+  background:var(--accent);color:#000;
+  padding:20px 36px;
+  font-family:'Inter',sans-serif;
+  font-size:15px;font-weight:900;
+  letter-spacing:.06em;text-transform:uppercase;
+  text-decoration:none;
+  border:2px solid #000;
+  box-shadow:5px 5px 0 #000;
+  transition:box-shadow .15s,transform .15s;
+  cursor:pointer;
+}
+.btn-brutalist:hover{
+  box-shadow:2px 2px 0 #000;
+  transform:translate(3px,3px);
+}
+
+/* CTA STACK com progress */
+.cta-stack{display:flex;flex-direction:column;align-items:flex-start;gap:12px;max-width:460px;}
+.cta-progress{width:100%;}
+.cta-progress-bar{height:6px;border-radius:3px;background:var(--border-bright);overflow:hidden;margin-bottom:6px;}
+.cta-progress-fill{height:100%;background:var(--danger);border-radius:3px;width:85%;transition:width 1.5s ease;}
+.cta-progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-dim);}
+.cta-progress-label strong{color:var(--ink);}
+
+/* ============================================================
+   TERMINAL ANIMADO
+   ============================================================ */
+.term{
+  background:#0d0d0d;border:1px solid var(--border-bright);border-radius:10px;
+  overflow:hidden;font-family:'JetBrains Mono',monospace;
+  box-shadow:0 24px 64px rgba(0,0,0,.6);
+  max-width:500px;
+}
+.term-bar{
+  display:flex;align-items:center;gap:6px;
+  background:#1c1c1e;padding:10px 14px;
+}
+.term-dot{width:12px;height:12px;border-radius:50%;}
+.term-dot-r{background:#ff5f57;}
+.term-dot-y{background:#ffbd2e;}
+.term-dot-g{background:#28ca41;}
+.term-title{
+  margin-left:auto;margin-right:auto;
+  font-size:12px;color:#888;letter-spacing:.05em;
+}
+.term-body{padding:20px 18px;font-size:13px;line-height:1.7;}
+.term-pre{
+  color:var(--accent);font-size:11px;line-height:1.2;margin-bottom:12px;
+  white-space:pre;display:block;
+}
+.term-meta{color:#888;font-size:12px;margin-bottom:16px;}
+.term-meta span{color:#ff9f0a;}
+.term-divider{border:none;border-top:1px solid var(--border-bright);margin:0 0 14px;}
+.term-line{margin-bottom:8px;}
+.term-prompt{color:var(--accent);margin-right:6px;}
+.term-cmd{color:#f5f5f0;}
+.term-reply{margin-left:14px;}
+.term-reply-line{
+  color:var(--ink-dim);margin-bottom:4px;
+  opacity:0;
+  animation:fadein .3s forwards;
+}
+.term-reply-line:nth-child(1){animation-delay:.8s;}
+.term-reply-line:nth-child(2){animation-delay:1.4s;}
+.term-reply-line:nth-child(3){animation-delay:2s;}
+.term-reply-line:nth-child(4){animation-delay:2.6s;}
+.term-warn{color:#ff9f0a;}
+.term-ok{color:#30d158;}
+@keyframes fadein{to{opacity:1;}}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  padding:72px 0 80px;
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 0%,rgba(212,255,0,.07),transparent),
+    radial-gradient(ellipse 60% 60% at 10% 100%,rgba(212,255,0,.04),transparent);
+  position:relative;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 480px;gap:48px;align-items:start;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--bg-el);border:1px solid var(--border-bright);
+  padding:7px 16px;border-radius:100px;
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-dim);
+  margin-bottom:24px;
+}
+.hero-tag-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);}
+.hero h1{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(42px,6.5vw,80px);
+  line-height:.95;letter-spacing:-.02em;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.hero h1 .hl{color:var(--accent);}
+.hero h1 .stk{
+  position:relative;color:var(--ink-muted);
+}
+.hero h1 .stk::after{
+  content:'';position:absolute;left:0;right:0;top:50%;
+  height:5px;background:var(--danger);transform:rotate(-1.5deg);
+}
+.hero-sub{
+  font-size:clamp(16px,1.8vw,20px);color:var(--ink-dim);
+  max-width:660px;margin-bottom:32px;
+}
+.hero-sub strong{color:var(--ink);}
+
+.hero-meta{display:flex;gap:28px;margin-bottom:28px;flex-wrap:wrap;}
+.hero-meta-item{display:flex;align-items:center;gap:8px;font-size:14px;}
+.hero-meta-item .badge{
+  background:var(--bg-el);border:1px solid var(--border-bright);
+  padding:4px 10px;border-radius:4px;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--accent);
+  font-family:'JetBrains Mono',monospace;
+}
+.hero-meta-item strong{font-weight:700;}
+
+/* ============================================================
+   COUNTDOWN
+   ============================================================ */
+.countdown-section{
+  background:var(--bg-s);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:40px 0;text-align:center;
+}
+.countdown-eyebrow{
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-muted);margin-bottom:20px;
+}
+.countdown-grid{
+  display:inline-grid;grid-template-columns:repeat(4,auto);
+  align-items:center;gap:8px;
+}
+.counter-box{
+  background:var(--bg-card);border:1px solid var(--border-bright);
+  padding:20px 28px;border-radius:8px;text-align:center;min-width:88px;
+}
+.counter-box--big .counter-num{
+  font-family:'Anton',sans-serif;font-size:52px;line-height:1;
+  color:var(--accent);letter-spacing:-.02em;display:block;
+}
+.counter-box--big .counter-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);
+  display:block;margin-top:4px;
+}
+.countdown-sep{font-family:'Anton',sans-serif;font-size:40px;color:var(--border-bright);}
+
+/* ============================================================
+   SECTION GERAL
+   ============================================================ */
+.section{padding:80px 0;}
+.eyebrow{
+  display:inline-block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);font-family:'JetBrains Mono',monospace;
+  border:1px solid rgba(212,255,0,.3);padding:5px 12px;border-radius:100px;
+  margin-bottom:16px;
+}
+.section-title{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(32px,5vw,56px);
+  line-height:1.05;letter-spacing:-.015em;text-transform:uppercase;
+  margin-bottom:16px;max-width:900px;
+}
+.section-title .hl{color:var(--accent);}
+.section-sub{font-size:17px;color:var(--ink-dim);max-width:680px;margin-bottom:48px;line-height:1.65;}
+
+/* ============================================================
+   REVEAL ANIMATION (scroll)
+   ============================================================ */
+.reveal{
+  opacity:0;transform:translateY(28px);
+  transition:opacity .55s ease,transform .55s ease;
+}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+
+/* ============================================================
+   PAIN / IDENT CARDS (tech-card estilo)
+   ============================================================ */
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:32px;}
+.tech-card{
+  background:var(--bg-card);
+  border:1px solid var(--border-bright);
+  padding:28px 24px;border-radius:8px;
+  transition:border-color .25s,transform .25s;
+}
+.tech-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.tech-card .x-icon{color:var(--danger);font-size:20px;font-weight:900;margin-bottom:12px;display:block;}
+.tech-card h3{font-size:17px;font-weight:700;margin-bottom:8px;}
+.tech-card p{font-size:14px;color:var(--ink-dim);line-height:1.6;}
+.tech-card .badge{
+  display:inline-block;background:var(--bg-el);border:1px solid var(--border-bright);
+  padding:4px 10px;border-radius:4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);font-family:'JetBrains Mono',monospace;margin-bottom:12px;
+}
+
+/* ============================================================
+   TIMELINE (programação)
+   ============================================================ */
+.timeline{list-style:none;padding:0;margin-top:40px;position:relative;}
+.timeline::before{
+  content:'';position:absolute;left:56px;top:0;bottom:0;
+  width:1px;background:var(--border-bright);
+}
+.timeline-item{
+  display:grid;grid-template-columns:112px 1fr;
+  gap:24px;margin-bottom:4px;align-items:start;
+}
+.timeline-marker{
+  display:flex;flex-direction:column;align-items:flex-end;
+  padding-right:20px;padding-top:20px;gap:8px;
+}
+.timeline-time{
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  color:var(--accent);
+}
+.timeline-dot{
+  width:14px;height:14px;border-radius:50%;
+  background:var(--accent);border:2px solid var(--bg-s);
+  box-shadow:0 0 0 3px var(--border-bright);
+  margin-right:-7px;/* center on line */
+}
+.timeline-dot--end{background:var(--ink);}
+.timeline-card{
+  background:var(--bg-card);border:1px solid var(--border-bright);
+  padding:28px 24px;border-radius:8px;margin-bottom:16px;
+}
+.timeline-card .badge{margin-bottom:12px;}
+.timeline-card p{color:var(--ink-dim);font-size:14px;line-height:1.65;}
+.timeline-card ul{list-style:none;padding:0;margin-top:16px;}
+.timeline-card li{
+  display:flex;gap:10px;font-size:14px;padding:5px 0;
+}
+.timeline-card li::before{content:'→';color:var(--accent);font-weight:900;flex-shrink:0;}
+.timeline-card blockquote{
+  border-left:2px solid var(--accent);padding-left:14px;
+  font-style:italic;font-size:14px;color:var(--ink-dim);margin-bottom:16px;
+}
+.timeline-end{
+  font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;
+  letter-spacing:-.01em;color:var(--ink);padding-top:4px;
+}
+
+/* ============================================================
+   VALUE STACK
+   ============================================================ */
+.value-stack{
+  background:var(--bg-card);border:1px solid var(--border-bright);
+  border-radius:10px;overflow:hidden;max-width:720px;margin:32px auto 0;
+}
+.stack-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 28px;border-bottom:1px solid var(--border);
+  font-size:15px;
+}
+.stack-row:last-child{border-bottom:none;}
+.stack-row .val{color:var(--ink-dim);font-family:'JetBrains Mono',monospace;font-size:13px;}
+.stack-total{
+  background:var(--bg-el);padding:20px 28px;
+  display:flex;justify-content:space-between;
+  font-weight:700;font-size:15px;
+}
+.stack-total .num{font-family:'JetBrains Mono',monospace;text-decoration:line-through;color:var(--ink-muted);}
+.stack-final{
+  background:var(--accent);color:#000;padding:28px;text-align:center;
+}
+.stack-final .lbl{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;}
+.stack-final .num{font-family:'Anton',sans-serif;font-size:60px;line-height:1;letter-spacing:-.02em;}
+.stack-final .note{font-size:12px;margin-top:6px;opacity:.7;}
+
+/* ============================================================
+   GARANTIA
+   ============================================================ */
+.guarantee-card{
+  background:var(--bg-card);border:2px solid var(--accent);
+  border-radius:10px;padding:48px 40px;max-width:780px;margin:32px auto 0;
+  text-align:center;position:relative;overflow:hidden;
+}
+.guarantee-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at top,rgba(212,255,0,.06),transparent 60%);
+  pointer-events:none;
+}
+.guarantee-seal{
+  width:84px;height:84px;background:var(--accent);color:#000;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;font-family:'Anton',sans-serif;font-size:22px;
+  margin:0 auto 20px;line-height:1;text-align:center;
+}
+.guarantee-seal small{font-size:10px;letter-spacing:.05em;}
+.guarantee-card h3{
+  font-family:'Anton',sans-serif;font-size:clamp(22px,3.5vw,32px);
+  text-transform:uppercase;margin-bottom:14px;
+}
+.guarantee-card p{color:var(--ink-dim);font-size:15px;line-height:1.7;}
+
+/* ============================================================
+   OFFER BOX (checkout section)
+   ============================================================ */
+.offer-wrap{
+  display:grid;grid-template-columns:1fr auto 380px;
+  gap:0;background:var(--bg-card);border:1px solid var(--border-bright);
+  border-radius:12px;overflow:hidden;
+}
+.offer-left{padding:40px 36px;}
+.offer-title{
+  font-family:'Anton',sans-serif;font-size:30px;
+  text-transform:uppercase;line-height:1.1;margin-bottom:8px;
+}
+.offer-meta{font-size:13px;color:var(--ink-dim);margin-bottom:28px;font-family:'JetBrains Mono',monospace;}
+.offer-features{display:flex;flex-direction:column;gap:14px;margin-bottom:28px;}
+.offer-feature{display:flex;gap:14px;align-items:flex-start;}
+.offer-feature-icon{
+  width:36px;height:36px;background:var(--bg-el);border:1px solid var(--border-bright);
+  display:flex;align-items:center;justify-content:center;border-radius:6px;
+  font-size:16px;flex-shrink:0;
+}
+.offer-feature p:first-child{font-weight:700;font-size:14px;}
+.offer-feature p:last-child{font-size:13px;color:var(--ink-dim);}
+.offer-seals{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+.offer-seal{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--ink-dim);
+  background:var(--bg-el);padding:6px 12px;border-radius:100px;border:1px solid var(--border-bright);
+}
+.offer-divider{width:1px;background:var(--border-bright);}
+.offer-right{padding:40px 36px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+.offer-price-old{font-size:13px;color:var(--ink-muted);text-decoration:line-through;}
+.offer-price-main{
+  font-family:'Anton',sans-serif;font-size:80px;line-height:1;
+  letter-spacing:-.03em;display:flex;align-items:flex-start;
+}
+.offer-price-cur{font-size:32px;margin-top:10px;margin-right:2px;}
+.offer-price-cents{font-size:32px;vertical-align:super;margin-left:2px;}
+.offer-price-sub{font-size:13px;color:var(--ink-dim);}
+.offer-cta{
+  display:block;width:100%;
+  background:var(--accent);color:#000;
+  padding:18px;font-size:14px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.06em;text-decoration:none;
+  border:2px solid #000;box-shadow:4px 4px 0 #000;
+  transition:box-shadow .15s,transform .15s;
+  font-family:'Inter',sans-serif;
+}
+.offer-cta:hover{box-shadow:1px 1px 0 #000;transform:translate(3px,3px);}
+.offer-progress{width:100%;}
+.offer-progress-bar{height:5px;background:var(--border-bright);border-radius:3px;overflow:hidden;margin-bottom:6px;}
+.offer-progress-fill{height:100%;background:var(--danger);width:85%;}
+.offer-progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-dim);}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-list{max-width:800px;margin-top:32px;}
+.faq-item{border-bottom:1px solid var(--border-bright);}
+.faq-item summary{
+  padding:20px 0;font-weight:600;font-size:16px;
+  list-style:none;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  user-select:none;
+}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{
+  content:'+';font-size:24px;color:var(--accent);
+  transition:transform .2s;line-height:1;
+}
+.faq-item[open] summary::after{transform:rotate(45deg);}
+.faq-item p{padding:0 0 20px;font-size:15px;color:var(--ink-dim);line-height:1.65;}
+
+/* ============================================================
+   PS BOX
+   ============================================================ */
+.ps-box{
+  background:var(--bg-card);border:1px solid var(--border-bright);
+  border-left:3px solid var(--accent);padding:20px 24px;border-radius:4px;
+  max-width:760px;margin:28px auto 0;font-size:15px;color:var(--ink-dim);line-height:1.7;
+}
+.ps-box strong{color:var(--ink);}
+
+/* ============================================================
+   FINAL CTA
+   ============================================================ */
+.final-cta{
+  background:var(--accent);color:#000;padding:80px 0;text-align:center;
+}
+.final-cta h2{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(40px,7vw,76px);line-height:.95;
+  text-transform:uppercase;letter-spacing:-.02em;margin-bottom:16px;
+}
+.final-cta p{font-size:19px;max-width:600px;margin:0 auto 36px;font-weight:500;}
+.btn-dark{
+  display:inline-flex;align-items:center;gap:12px;
+  background:#000;color:var(--accent);
+  padding:22px 44px;font-size:17px;font-weight:900;
+  letter-spacing:.04em;text-transform:uppercase;
+  text-decoration:none;
+  border:2px solid #000;box-shadow:5px 5px 0 rgba(0,0,0,.25);
+  transition:box-shadow .15s,transform .15s;
+  font-family:'Inter',sans-serif;
+}
+.btn-dark::after{content:'→';font-size:22px;}
+.btn-dark:hover{box-shadow:2px 2px 0 rgba(0,0,0,.25);transform:translate(3px,3px);}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);font-size:12px;text-align:center;}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr;}
+  .offer-wrap{grid-template-columns:1fr;grid-template-rows:auto auto auto;}
+  .offer-divider{width:100%;height:1px;}
+  .timeline::before{display:none;}
+  .timeline-item{grid-template-columns:1fr;}
+  .timeline-marker{flex-direction:row;padding:0 0 12px;}
+}
+@media(max-width:600px){
+  .lote-row{grid-template-columns:repeat(3,1fr);}
+  .counter-box--big{padding:16px 16px;}
+  .counter-box--big .counter-num{font-size:36px;}
+  .countdown-sep{font-size:28px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== TOPBAR STICKY ====== -->
+<div class="topbar">
+  <span class="topbar-dot"></span>
+  1° LOTE · <strong>R$ 47</strong>
+  &nbsp;|&nbsp;
+  <span class="topbar-progress-wrap">
+    <span>85% das vagas preenchidas</span>
+    <div class="topbar-progress"><div class="topbar-progress-fill" style="width:85%"></div></div>
+  </span>
+</div>
+
+<!-- ====== HERO ====== -->
+<section class="hero bg-grid">
+  <div class="container">
+    <div class="hero-inner">
+
+      <!-- TEXTO -->
+      <div>
+        <div class="hero-tag">
+          <span class="hero-tag-dot"></span>
+          EVENTO AO VIVO · 23/05/2026 · 8 HORAS
+        </div>
+
+        <h1>
+          Pare de perder<br>
+          <span class="stk">10 horas</span><br>
+          em planilhas.<br>
+          <span class="hl">A IA faz por você.</span>
+        </h1>
+
+        <p class="hero-sub">
+          No dia <strong>23 de maio</strong>, em 8 horas ao vivo, você sai com <strong>50 prompts prontos</strong>, <strong>1 dashboard funcionando</strong> e <strong>1 automação rodando</strong> na sua planilha. Mesmo que nunca tenha feito uma fórmula sozinho.
+        </p>
+
+        <div class="hero-meta">
+          <div class="hero-meta-item"><span class="badge">Data</span><strong>Sábado, 23 de maio</strong></div>
+          <div class="hero-meta-item"><span class="badge">Horário</span><strong>09h às 18h</strong></div>
+          <div class="hero-meta-item"><span class="badge">Online</span><strong>Ao vivo</strong></div>
+        </div>
+
+        <!-- LOTES -->
+        <div class="lote-row">
+          <div class="lote-card lote-card--active">
+            <span class="lote-fire">🔥</span>
+            <span class="lote-label">1° Lote</span>
+            <span class="lote-price">R$ 47</span>
+          </div>
+          <div class="lote-card">
+            <span class="lote-label">2° Lote</span>
+            <span class="lote-price">R$ 97</span>
+          </div>
+          <div class="lote-card">
+            <span class="lote-label">3° Lote</span>
+            <span class="lote-price">R$ 147</span>
+          </div>
+        </div>
+
+        <div class="cta-stack">
+          <a href="#checkout" class="btn-brutalist">GARANTIR MINHA VAGA POR R$47</a>
+          <div class="cta-progress">
+            <div class="cta-progress-bar"><div class="cta-progress-fill"></div></div>
+            <div class="cta-progress-label">
+              <strong>1° LOTE</strong>
+              <span id="vagas-label">Poucas vagas restantes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TERMINAL -->
+      <div>
+        <div class="term">
+          <div class="term-bar">
+            <span class="term-dot term-dot-r"></span>
+            <span class="term-dot term-dot-y"></span>
+            <span class="term-dot term-dot-g"></span>
+            <span class="term-title">claude — planilha-inteligente</span>
+          </div>
+          <div class="term-body">
+            <span class="term-pre"> ▐▛███▜▌
+▝▜█████▛▘
+  ▘▘ ▝▝  </span>
+            <div class="term-meta">
+              <div><span>Claude</span> + Excel/Sheets</div>
+              <div>Assistente de Planilhas com IA</div>
+              <div style="color:#555;">~/Minha Planilha</div>
+            </div>
+            <hr class="term-divider">
+            <div class="term-line">
+              <span class="term-prompt">&gt;</span>
+              <span class="term-cmd">/analisar-vendas base-outubro.xlsx</span>
+            </div>
+            <div class="term-reply">
+              <p class="term-reply-line">↻ lendo planilha (847 linhas)...</p>
+              <p class="term-reply-line term-warn">⚠ 23 CPFs duplicados encontrados</p>
+              <p class="term-reply-line term-warn">⚠ coluna "valor" com 11 células vazias</p>
+              <p class="term-reply-line term-ok">→ limpeza e dashboard prontos em 4s.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== COUNTDOWN ====== -->
+<section class="countdown-section">
+  <div class="countdown-eyebrow">O workshop começa em</div>
+  <div class="countdown-grid">
+    <div class="counter-box counter-box--big">
+      <span class="counter-num" id="d-days">00</span>
+      <span class="counter-lbl">Dias</span>
+    </div>
+    <span class="countdown-sep">:</span>
+    <div class="counter-box counter-box--big">
+      <span class="counter-num" id="d-hours">00</span>
+      <span class="counter-lbl">Horas</span>
+    </div>
+    <span class="countdown-sep">:</span>
+    <div class="counter-box counter-box--big">
+      <span class="counter-num" id="d-mins">00</span>
+      <span class="counter-lbl">Min</span>
+    </div>
+    <span class="countdown-sep">:</span>
+    <div class="counter-box counter-box--big">
+      <span class="counter-num" id="d-secs">00</span>
+      <span class="counter-lbl">Seg</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== IDENTIFICAÇÃO / DOR ====== -->
+<section class="section" style="background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <span class="eyebrow">Você se identifica?</span>
+    <h2 class="section-title">O Workshop é pra você que:</h2>
+    <div class="pain-grid">
+      <div class="tech-card reveal">
+        <span class="badge">01</span>
+        <h3>Passa horas em fórmula que não funciona</h3>
+        <p>PROCV que devolve #N/D. SOMASE que não soma. Você vai ao Google, vê um vídeo de 18 minutos, tenta, não funciona. São 40 minutos perdidos.</p>
+      </div>
+      <div class="tech-card reveal">
+        <span class="badge">02</span>
+        <h3>Recebe base bagunçada toda semana</h3>
+        <p>Nome em maiúsculo, CPF sem formatação, data errada. Limpar na mão leva o dia inteiro. Toda segunda o ciclo recomeça.</p>
+      </div>
+      <div class="tech-card reveal">
+        <span class="badge">03</span>
+        <h3>Refaz o mesmo relatório de novo</h3>
+        <p>Abrir planilha, copiar, colar, formatar gráfico. O chefe pede mais um. Mais 2 horas. Você já fez isso centenas de vezes esse ano.</p>
+      </div>
+      <div class="tech-card reveal">
+        <span class="badge">04</span>
+        <h3>Sai carregando planilha pra casa</h3>
+        <p>19h, notebook na mochila, relatório ainda aberto. Ninguém vê o esforço. Ninguém paga. E ainda chamam isso de "dedicação".</p>
+      </div>
+      <div class="tech-card reveal">
+        <span class="badge">05</span>
+        <h3>Quer escalar mas não consegue</h3>
+        <p>Pra assumir mais responsabilidade precisa entregar mais rápido. Sem método, cada novo projeto só aumenta a pilha.</p>
+      </div>
+      <div class="tech-card reveal">
+        <span class="badge">06</span>
+        <h3>Sente que vai ficar pra trás</h3>
+        <p>Vê colegas falando em automação com IA e sente que em 12 meses quem não aprender vai estar obsoleto. E você está certo.</p>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:40px;font-size:17px;color:var(--ink-dim);">
+      Se você se identifica com pelo menos um ponto, <strong style="color:var(--ink);">esse workshop foi feito exatamente pra você.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ====== PROGRAMAÇÃO / TIMELINE ====== -->
+<section class="section bg-grid">
+  <div class="container">
+    <span class="eyebrow">Programação completa</span>
+    <h2 class="section-title">O que você vai <span class="hl">construir</span> ao vivo</h2>
+
+    <ol class="timeline">
+      <li class="timeline-item reveal">
+        <div class="timeline-marker">
+          <span class="timeline-time">09h</span>
+          <span class="timeline-dot"></span>
+        </div>
+        <div class="timeline-card">
+          <span class="badge">MÓDULO 01 · Excel do zero com IA · 09h–10h30</span>
+          <blockquote>Nunca abriu uma planilha direito? Em 90 minutos você sai fazendo — porque a IA monta pra você e você só adapta.</blockquote>
+          <ul>
+            <li>O prompt exato que faz IA gerar qualquer fórmula da planilha com perfeição</li>
+            <li>Como colar fórmula sem quebrar referência</li>
+            <li>5 funções que resolvem 80% dos casos do dia a dia</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="timeline-item reveal">
+        <div class="timeline-marker">
+          <span class="timeline-time">10h45</span>
+          <span class="timeline-dot"></span>
+        </div>
+        <div class="timeline-card">
+          <span class="badge">MÓDULO 02 · Claude no Excel · 10h45–12h30</span>
+          <blockquote>O segredo que ninguém ensinou: Claude analisa, limpa e enriquece sua planilha em linguagem natural — sem código.</blockquote>
+          <ul>
+            <li>Forma de conectar o Claude na sua planilha ou num banco de dados</li>
+            <li>Limpeza de base bagunçada em 1 comando</li>
+            <li>Análise de dados conversando com a IA</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="timeline-item">
+        <div class="timeline-marker">
+          <span class="timeline-time">13h</span>
+          <span class="timeline-dot" style="background:var(--border-bright)"></span>
+        </div>
+        <div class="timeline-card" style="border-color:var(--border);">
+          <span class="badge" style="color:var(--ink-muted);border-color:var(--border);">PAUSA · Almoço · 13h–14h</span>
+          <p>Descansá, volta com energia pra segunda parte.</p>
+        </div>
+      </li>
+
+      <li class="timeline-item reveal">
+        <div class="timeline-marker">
+          <span class="timeline-time">14h</span>
+          <span class="timeline-dot"></span>
+        </div>
+        <div class="timeline-card">
+          <span class="badge">MÓDULO 03 · App que alimenta planilha · 14h–15h30</span>
+          <blockquote>Pare de digitar dado manualmente. Crie um app que preenche a planilha automaticamente.</blockquote>
+          <ul>
+            <li>Formulário web conectado ao Sheets em tempo real</li>
+            <li>Integração com sistemas que você já usa</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="timeline-item reveal">
+        <div class="timeline-marker">
+          <span class="timeline-time">15h45</span>
+          <span class="timeline-dot"></span>
+        </div>
+        <div class="timeline-card">
+          <span class="badge">MÓDULO 04 · Dashboard do zero com IA · 15h45–17h30</span>
+          <blockquote>Aquele dashboard que impressiona a diretoria — do dado bruto ao gráfico final em menos de uma hora.</blockquote>
+          <ul>
+            <li>Acesse templates prontos pra adaptar</li>
+            <li>Relatório que se atualiza sozinho toda semana</li>
+            <li>Truque pra deixar bonito sem ser designer</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="timeline-item reveal">
+        <div class="timeline-marker">
+          <span class="timeline-time">17h30</span>
+          <span class="timeline-dot"></span>
+        </div>
+        <div class="timeline-card" style="border-color:var(--accent);">
+          <span class="badge">🎁 BÔNUS · 3 formas de dobrar sua renda com IA · 17h30–18h</span>
+          <blockquote>O encerramento que vale o ingresso inteiro. Como o que você aprendeu hoje vira aumento de salário, freela ou negócio.</blockquote>
+          <ul>
+            <li>Como se posicionar como referência de IA na empresa</li>
+            <li>Serviço lateral que paga R$ 2k–8k por mês</li>
+            <li>Argumento que funciona pra pedir aumento ainda em 2026</li>
+          </ul>
+        </div>
+      </li>
+
+      <li class="timeline-item">
+        <div class="timeline-marker">
+          <span class="timeline-time">18h</span>
+          <span class="timeline-dot timeline-dot--end"></span>
+        </div>
+        <div class="timeline-end">
+          Você sai com 5 módulos, 50 prompts prontos e 1 automação rodando.
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ====== BÔNUS ====== -->
+<section class="section" style="background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <span class="eyebrow">E tem mais</span>
+    <h2 class="section-title">Além de tudo, você também <span class="hl">ganha:</span></h2>
+    <div class="pain-grid">
+      <div class="tech-card reveal">
+        <span class="badge">50 Prompts</span>
+        <h3 style="margin-top:12px;">Biblioteca de prompts prontos</h3>
+        <p>50 prompts testados pra fórmula, limpeza, análise e relatório. Você cola, adapta e usa no mesmo dia. Atualização inclusa.</p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <div class="cta-stack" style="align-items:center;margin:0 auto;">
+        <a href="#checkout" class="btn-brutalist">GARANTIR MINHA VAGA — R$47</a>
+        <div class="cta-progress" style="max-width:460px;width:100%;">
+          <div class="cta-progress-bar"><div class="cta-progress-fill"></div></div>
+          <div class="cta-progress-label"><strong>2° LOTE</strong><span>Poucas vagas restantes</span></div>
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--ink-muted);">Pagamento seguro · Acesso imediato</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== VALUE STACK ====== -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">A conta que faz sentido</span>
+    <h2 class="section-title">Tudo isso vale <span class="hl">R$ 1.843</span>.<br>Hoje sai por R$ 47.</h2>
+    <p class="section-sub">Não é promoção. É lote 1. Lote 2 sobe pra R$ 97. Lote 3 (semana do evento) vai pra R$ 147.</p>
+
+    <div class="value-stack">
+      <div class="stack-row"><span>Workshop ao vivo · 8 horas · 23/05</span><span class="val">R$ 397</span></div>
+      <div class="stack-row"><span>Excel do zero com IA</span><span class="val">R$ 147</span></div>
+      <div class="stack-row"><span>Claude no Excel · passo a passo</span><span class="val">R$ 197</span></div>
+      <div class="stack-row"><span>App que alimenta planilha automaticamente</span><span class="val">R$ 247</span></div>
+      <div class="stack-row"><span>Dashboard do zero com IA</span><span class="val">R$ 197</span></div>
+      <div class="stack-row"><span>Bônus · 3 formas de dobrar sua renda com IA</span><span class="val">R$ 297</span></div>
+      <div class="stack-row"><span>Bônus · 50 prompts prontos</span><span class="val">R$ 197</span></div>
+      <div class="stack-total"><span>Total se comprado separado</span><span class="num">R$ 1.843</span></div>
+      <div class="stack-final">
+        <div class="lbl">Seu investimento hoje</div>
+        <div class="num">R$ 47</div>
+        <div class="note">ou 12x de R$ 4,73 no cartão</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== GARANTIA ====== -->
+<section class="section" style="background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <span class="eyebrow">Risco zero</span>
+    <h2 class="section-title">Se você sair do dia 23 sem <span class="hl">1 automação</span> rodando — devolvo seus R$ 47</h2>
+    <div class="guarantee-card reveal">
+      <div class="guarantee-seal">7<small>DIAS</small></div>
+      <h3>E você ainda fica com tudo</h3>
+      <p>Participe das 8 horas. Se até as 18h você não tiver montado pelo menos uma automação que economiza seu tempo no trabalho, me manda um e-mail e devolvo <strong>100%</strong>. Você fica com os 50 prompts e o material. O risco é todo meu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CHECKOUT ====== -->
+<section class="section bg-grid" id="checkout">
+  <div class="container">
+    <div class="offer-wrap reveal">
+      <div class="offer-left">
+        <h2 class="offer-title">Planilhas com IA Day<br><span class="hl">Acesso completo + bônus</span></h2>
+        <p class="offer-meta">Sábado 23 de maio · 09h às 18h · Online ao vivo</p>
+        <div class="offer-features">
+          <div class="offer-feature">
+            <div class="offer-feature-icon">⏱</div>
+            <div><p>8h ao vivo</p><p>Construção prática ao vivo</p></div>
+          </div>
+          <div class="offer-feature">
+            <div class="offer-feature-icon">◎</div>
+            <div><p>5 Módulos práticos</p><p>Do zero ao dashboard funcionando</p></div>
+          </div>
+          <div class="offer-feature">
+            <div class="offer-feature-icon">✦</div>
+            <div><p>50 Prompts prontos</p><p>Pra usar no mesmo dia</p></div>
+          </div>
+          <div class="offer-feature">
+            <div class="offer-feature-icon">♡</div>
+            <div><p>Gravação 30 dias</p><p>Assiste no seu ritmo</p></div>
+          </div>
+        </div>
+        <div class="offer-seals">
+          <div class="offer-seal"><span>🔒</span><span>Compra segura</span></div>
+          <div class="offer-seal"><span>✓</span><span>7 dias garantia</span></div>
+          <div class="offer-seal"><span>⚡</span><span>Acesso imediato</span></div>
+        </div>
+      </div>
+      <div class="offer-divider"></div>
+      <div class="offer-right">
+        <div class="offer-price-old">De R$ 1.843,00</div>
+        <div class="offer-price-main">
+          <span class="offer-price-cur">R$</span>
+          <span>47</span>
+          <sup class="offer-price-cents">,00</sup>
+        </div>
+        <div class="offer-price-sub">ou no PIX à vista</div>
+        <a href="#" class="offer-cta">GARANTIR MEU INGRESSO</a>
+        <div class="offer-progress">
+          <div class="offer-progress-bar"><div class="offer-progress-fill"></div></div>
+          <div class="offer-progress-label"><strong>1° LOTE</strong><span>85% das vagas</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== QUEM É ====== -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Quem é</span>
+    <h2 class="section-title"><span class="hl">Miqueias</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start;margin-top:48px;">
+      <div>
+        <p class="section-sub" style="margin-bottom:24px;">
+          Com mais de 8 anos de experiência em análise de dados e treinamento corporativo, Miqueias já treinou mais de 6 mil profissionais em empresas de médio e grande porte.
+        </p>
+        <p style="font-size:16px;color:var(--ink-dim);line-height:1.7;margin-bottom:20px;">
+          Sua didática simples e objetiva é o que faz alunos sem nenhuma experiência saírem do curso prontos para aplicar tudo no trabalho — no mesmo dia.
+        </p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:28px;">
+          <div style="background:var(--bg-el);border:1px solid var(--border-bright);padding:12px 16px;border-radius:6px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;">
+            🏆 Certificado Anthropic
+          </div>
+          <div style="background:var(--bg-el);border:1px solid var(--border-bright);padding:12px 16px;border-radius:6px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;">
+            🧠 Common Sense OpenAI
+          </div>
+          <div style="background:var(--bg-el);border:1px solid var(--border-bright);padding:12px 16px;border-radius:6px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;">
+            📊 Google Ads IA
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border-bright);border-radius:10px;padding:28px;text-align:center;height:fit-content;">
+        <div style="width:100%;height:280px;background:var(--bg-el);border-radius:8px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);font-size:14px;">
+          [Foto do Miqueias]
+        </div>
+        <p style="font-family:'Anton',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px;text-transform:uppercase;">Miqueias</p>
+        <p style="font-size:13px;color:var(--ink-dim);font-family:'JetBrains Mono',monospace;">Especialista em Planilhas com IA</p>
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border-bright);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center;font-size:13px;">
+            <div>
+              <p style="font-family:'Anton',sans-serif;font-size:26px;color:var(--accent);font-weight:700;">8+</p>
+              <p style="color:var(--ink-muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;">Anos de XP</p>
+            </div>
+            <div>
+              <p style="font-family:'Anton',sans-serif;font-size:26px;color:var(--accent);font-weight:700;">6k+</p>
+              <p style="color:var(--ink-muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;">Alunos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section class="section" style="background:var(--bg-card);border-top:1px solid var(--border);">
+  <div class="container">
+    <span class="eyebrow">Dúvidas frequentes</span>
+    <h2 class="section-title">Perguntas e <span class="hl">Respostas</span></h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>E se eu nunca tiver usado Excel direito?</summary>
+        <p>O Módulo 01 começa do zero absoluto. Se você consegue abrir uma planilha, consegue acompanhar. A IA é o atalho — você não precisa decorar fórmula, ela monta pra você.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Preciso pagar Claude ou ChatGPT pago?</summary>
+        <p>Não. Tudo que você vai aprender funciona nas versões gratuitas. Se você já tem o pago, melhor ainda — eu mostro o que muda.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Funciona com Google Sheets também?</summary>
+        <p>Sim. Tudo que mostro funciona em Excel, Sheets ou LibreOffice. As fórmulas e prompts são os mesmos.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Como recebo o acesso?</summary>
+        <p>Após o pagamento você recebe e-mail com link do evento e material de apoio. Tudo automático.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Posso parcelar?</summary>
+        <p>Sim. Em até 12x de R$ 9,79 no cartão de crédito.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL CTA ====== -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Dia 23/05.<br>Sua planilha vai<br>trabalhar por você.</h2>
+    <p>Em 19 dias você pode estar entregando relatório em 10 minutos em vez de 4 horas. A decisão de entrar é hoje.</p>
+    <div class="cta-stack" style="align-items:center;margin:0 auto 20px;">
+      <a href="#checkout" class="btn-brutalist" style="background:#000;color:var(--accent);border-color:rgba(0,0,0,.3);box-shadow:5px 5px 0 rgba(0,0,0,.25);">GARANTIR MINHA VAGA POR R$47</a>
+      <div class="cta-progress" style="max-width:460px;width:100%;">
+        <div class="cta-progress-bar" style="background:rgba(0,0,0,.15);"><div class="cta-progress-fill" style="background:#000;"></div></div>
+        <div class="cta-progress-label" style="color:rgba(0,0,0,.6);"><strong style="color:#000;">1° LOTE</strong><span>Vagas se esgotando</span></div>
+      </div>
+    </div>
+    <div class="ps-box" style="background:rgba(0,0,0,.1);border-color:rgba(0,0,0,.15);color:rgba(0,0,0,.65);border-left-color:#000;">
+      <strong style="color:#000;">P.S.</strong> Toda semana que passa sem IA + planilha é mais 10 horas perdidas. R$ 47 hoje. Ou mais uma semana do mesmo jeito. Você escolhe.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© 2026 · Planilhas com IA Day · CNPJ XX.XXX.XXX/0001-XX · Política de privacidade · Termos de uso</div>
+</footer>
+
+<script>
+/* ---- COUNTDOWN ---- */
+const target = new Date('2026-05-23T09:00:00-03:00').getTime();
+function tick(){
+  const diff=Math.max(0,target-Date.now());
+  const pad=n=>String(n).padStart(2,'0');
+  document.getElementById('d-days').textContent=pad(Math.floor(diff/86400000));
+  document.getElementById('d-hours').textContent=pad(Math.floor((diff%86400000)/3600000));
+  document.getElementById('d-mins').textContent=pad(Math.floor((diff%3600000)/60000));
+  document.getElementById('d-secs').textContent=pad(Math.floor((diff%60000)/1000));
+}
+tick();setInterval(tick,1000);
+
+/* ---- REVEAL ON SCROLL ---- */
+const revealEls=document.querySelectorAll('.reveal');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');}});
+},{threshold:.12});
+revealEls.forEach(el=>observer.observe(el));
+
+/* ---- PROGRESS BAR ANIMATED ---- */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.querySelectorAll('.cta-progress-fill').forEach(el=>{el.style.width='85%';});
+    document.querySelectorAll('.offer-progress-fill').forEach(el=>{el.style.width='85%';});
+  },400);
+});
+</script>
+
+</body>
+</html>
