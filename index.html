@@ -524,6 +524,14 @@ body{
    ============================================================ */
 footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);font-size:12px;text-align:center;}
 
+.instructor-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 48px;
+  align-items: start;
+  margin-top: 48px;
+}
+
 /* ============================================================
    RESPONSIVE
    ============================================================ */
@@ -534,12 +542,27 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
   .timeline::before{display:none;}
   .timeline-item{grid-template-columns:1fr;}
   .timeline-marker{flex-direction:row;padding:0 0 12px;}
+  .instructor-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 @media(max-width:600px){
   .lote-row{grid-template-columns:repeat(3,1fr);}
   .counter-box--big{padding:16px 16px;}
   .counter-box--big .counter-num{font-size:36px;}
   .countdown-sep{font-size:28px;}
+  .btn-brutalist {
+    padding: 18px 24px;
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-size: clamp(28px, 8vw, 42px);
+    padding: 0 4px;
+  }
 }
 </style>
 </head>
@@ -948,7 +971,7 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
   <div class="container">
     <span class="eyebrow">Quem é</span>
     <h2 class="section-title"><span class="hl">Miqueias</span></h2>
-    <div style="display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start;margin-top:48px;">
+    <div class="instructor-grid">
       <div>
         <p class="section-sub" style="margin-bottom:24px;">
           Com mais de 8 anos de experiência em análise de dados e treinamento corporativo, Miqueias já treinou mais de 6 mil profissionais em empresas de médio e grande porte.
