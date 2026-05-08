@@ -608,6 +608,18 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
     font-size: clamp(28px, 8vw, 42px);
     padding: 0 4px;
   }
+  .topbar {
+    flex-wrap: wrap;
+    font-size: 11px;
+    padding: 8px;
+    gap: 6px;
+    text-align: center;
+  }
+  .topbar-divider { display: none; }
+  .topbar-progress-wrap {
+    width: 100%;
+    justify-content: center;
+  }
 }
 </style>
 </head>
@@ -616,8 +628,8 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
 <!-- ====== TOPBAR STICKY ====== -->
 <div class="topbar">
   <span class="topbar-dot"></span>
-  1° LOTE · <strong>R$ 47</strong>
-  &nbsp;|&nbsp;
+  <span class="topbar-text-main">1° LOTE · <strong>R$ 47</strong></span>
+  <span class="topbar-divider">&nbsp;|&nbsp;</span>
   <span class="topbar-progress-wrap">
     <span>85% das vagas preenchidas</span>
     <div class="topbar-progress"><div class="topbar-progress-fill" style="width:85%"></div></div>
