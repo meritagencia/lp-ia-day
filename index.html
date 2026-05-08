@@ -582,15 +582,16 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
 @media(max-width:960px){
   .term { transform: none; }
   .hero-expert-img {
-    left: 55%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    height: 60%;
-    width: auto;
+    left: 50%;
+    top: auto;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: auto;
+    width: 80%;
     min-width: auto;
     max-width: none;
     object-fit: contain;
-    opacity: 0.4;
+    opacity: 0.85;
   }
   .hero-inner{grid-template-columns:1fr;}
   .offer-wrap{grid-template-columns:1fr;grid-template-rows:auto auto auto;}
@@ -669,9 +670,8 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
     margin-bottom: 20px;
   }
   .hero-expert-img {
-    height: 100%;
-    right: 0;
-    opacity: 0.3;
+    width: 90%;
+    opacity: 0.8;
   }
 }
 </style>
