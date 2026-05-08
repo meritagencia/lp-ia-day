@@ -197,12 +197,13 @@ body{
 }
 .hero-expert-img {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 35% center;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  height: 80%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
   z-index: 0;
   pointer-events: none;
   mix-blend-mode: lighten;
@@ -581,15 +582,14 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
 @media(max-width:960px){
   .term { transform: none; }
   .hero-expert-img {
-    left: 0;
-    top: 0;
-    transform: none;
-    height: 100%;
-    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: auto;
     min-width: auto;
     max-width: none;
-    object-fit: cover;
-    object-position: 35% center;
+    object-fit: contain;
     opacity: 0.4;
   }
   .hero-inner{grid-template-columns:1fr;}
