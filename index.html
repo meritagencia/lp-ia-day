@@ -526,6 +526,32 @@ body{
    ============================================================ */
 footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);font-size:12px;text-align:center;}
 
+/* ============================================================
+   TESTIMONIALS
+   ============================================================ */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.testimonial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-bright);
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: transform .3s ease;
+}
+.testimonial-card:hover { transform: scale(1.02); }
+.testimonial-card iframe {
+  width: 100%;
+  aspect-ratio: 9/16;
+  object-fit: cover;
+  display: block;
+  border: none;
+}
+
 .instructor-grid {
   display: grid;
   grid-template-columns: 1fr 400px;
@@ -547,6 +573,23 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
   .instructor-grid {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+  .testimonials-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding: 0 0 20px;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .testimonials-grid::-webkit-scrollbar { display: none; }
+  .testimonial-card {
+    min-width: 260px;
+    scroll-snap-align: center;
   }
 }
 @media(max-width:600px){
@@ -914,6 +957,30 @@ footer{padding:28px 0;border-top:1px solid var(--border);color:var(--ink-muted);
       <div class="guarantee-seal">7<small>DIAS</small></div>
       <h3>E você ainda fica com tudo</h3>
       <p>Participe das 8 horas. Se até as 18h você não tiver montado pelo menos uma automação que economiza seu tempo no trabalho, me manda um e-mail e devolvo <strong>100%</strong>. Você fica com os 50 prompts e o material. O risco é todo meu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ====== DEPOIMENTOS ====== -->
+<section class="section" style="background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="container">
+    <span class="eyebrow">Quem já aprendeu</span>
+    <h2 class="section-title">Resultados de quem <span class="hl">aplicou o método</span></h2>
+    <p class="section-sub">Veja como profissionais de diferentes áreas estão economizando horas de trabalho com IA e planilhas.</p>
+    
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <iframe src="https://player-vz-de871842-4a9.tv.pandavideo.com.br/embed/?autoplay=1&v=dbca6bac-c672-482a-9b1f-b5de78bd2a16" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen="true"></iframe>
+      </div>
+      <div class="testimonial-card">
+        <iframe src="https://player-vz-de871842-4a9.tv.pandavideo.com.br/embed/?autoplay=1&v=05a09c81-9e97-4b93-86e4-75fd5017153f" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen="true"></iframe>
+      </div>
+      <div class="testimonial-card">
+        <iframe src="https://player-vz-de871842-4a9.tv.pandavideo.com.br/embed/?autoplay=1&v=e1fe3b6c-2515-4a36-8d38-549c07784a99" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen="true"></iframe>
+      </div>
+      <div class="testimonial-card">
+        <iframe src="https://player-vz-de871842-4a9.tv.pandavideo.com.br/embed/?autoplay=1&v=d577355f-d58d-4c70-bb49-5001ee830aeb" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen="true"></iframe>
+      </div>
     </div>
   </div>
 </section>
