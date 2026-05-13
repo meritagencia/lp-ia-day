@@ -234,13 +234,12 @@ img,iframe{max-width:100%;}
 }
 .hero-expert-img {
  position: absolute;
- top: 38%;
- left: calc(50% + 10px);
+ top: 40%;
+ left: calc(50% + 160px);
  transform: translate(-50%, -50%);
- width: 100%;
- max-width: 450px;
+ width: clamp(680px, 52vw, 860px);
+ max-width: none;
  height: auto;
- aspect-ratio: 1/1;
  object-fit: contain;
  z-index: 0;
  pointer-events: none;
